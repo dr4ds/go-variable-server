@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <style>
+      div {
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script>
+      var root = document.getElementById("root");
+      var ws = new WebSocket("ws://127.0.0.1:9532/var");
+      ws.onmessage = res => {
+        var objStr = JSON.stringify(JSON.parse(res.data), undefined, 2);
+        var str = objStr.substring(2, objStr.length - 1);
+        root.innerText = str;
+      };
+      ws.onerror = res => {
+        console.log(res);
+      };
+    </script>
+  </body>
+</html>
