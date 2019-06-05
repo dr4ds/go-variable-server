@@ -19,6 +19,15 @@ func New() VariableSocket {
 	return VariableSocket{data: make(map[string]interface{})}
 }
 
+func (vs *VariableSocket) DeleteAll() {
+	vs.mux.Lock()
+	defer vs.mux.Unlock()
+
+	for key := range vs.data {
+		delete(vs.data, key)
+	}
+}
+
 func (vs *VariableSocket) Set(name string, v interface{}) {
 	vs.mux.Lock()
 	defer vs.mux.Unlock()
